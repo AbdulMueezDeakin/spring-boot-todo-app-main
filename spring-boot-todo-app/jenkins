@@ -9,11 +9,11 @@ pipeline {
                 // Example: sh 'docker build -t myapp .'
                 // Example: sh 'npm run build'
             }
-            post {
-                success {
-                    archiveArtifacts artifacts: '**/*', fingerprint: true
-                }
-            }
+            //post {
+             //   success {
+             //       archiveArtifacts artifacts: '**/*', fingerprint: true
+             //   }
+            //}
         }
         stage('Test') {
             steps {
