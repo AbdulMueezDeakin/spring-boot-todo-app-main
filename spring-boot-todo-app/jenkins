@@ -1,53 +1,56 @@
 pipeline {
     agent any
     
+    environment {
+        JAVA_HOME = '/path/to/your/java/home' // Update with your Java home directory
+        MAVEN_HOME = '/path/to/your/maven/home' // Update with your Maven home directory
+    }
+    
     stages {
         stage('Build') {
             steps {
-                // Your build commands here
-                // Example: sh 'mvn clean package'
-                // Example: sh 'docker build -t myapp .'
-                // Example: sh 'npm run build'
+                // Build Spring Boot application
+                script {
+                    sh 'mvn clean package'
+                }
             }
-            //post {
-             //   success {
-             //       archiveArtifacts artifacts: '**/*', fingerprint: true
-             //   }
-            //}
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                }
+            }
         }
         stage('Test') {
             steps {
-                // Your test commands here
-                // Example: sh 'mvn test'
-                // Example: sh 'npm test'
+                // Run tests
+                script {
+                    sh 'mvn test'
+                }
             }
         }
         stage('Code Quality Analysis') {
             steps {
-                // Your code quality analysis commands here
+                // Run code quality analysis (if applicable)
                 // Example: sh 'sonar-scanner'
-                // Example: sh 'codeclimate analyze'
             }
         }
         stage('Deploy') {
             steps {
-                // Your deployment commands here
-                // Example: sh 'docker-compose up -d'
-                // Example: sh 'eb deploy'
+                // Deploy Spring Boot application (for example, to a Docker container)
+                // Example: sh 'docker build -t todo-app .'
+                // Example: sh 'docker run -d -p 8080:8080 todo-app'
             }
         }
         stage('Release') {
             steps {
-                // Your release commands here
-                // Example: sh 'octo deploy-release --project MyProject --version 1.0.0'
-                // Example: sh 'aws deploy create-deployment --application-name MyApp --deployment-group MyDeploymentGroup --s3-location bucket=my-bucket,bundleType=zip,key=myapp.zip'
+                // Promote application to production environment (if applicable)
+                // Example: sh 'kubectl apply -f deployment.yaml'
             }
         }
         stage('Monitoring and Alerting') {
             steps {
-                // Your monitoring and alerting setup commands here
-                // Example: sh 'setup-datadog'
-                // Example: sh 'configure-newrelic'
+                // Set up monitoring and alerting (if applicable)
+                // Example: sh 'configure-datadog'
             }
         }
     }
