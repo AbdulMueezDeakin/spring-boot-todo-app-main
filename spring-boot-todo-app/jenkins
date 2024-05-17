@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build Spring Boot application
-                sh 'mvn clean'
+                sh 'mvn --version'
             }
             post {
                 success {
