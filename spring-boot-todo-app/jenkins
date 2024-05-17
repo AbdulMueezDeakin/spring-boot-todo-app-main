@@ -1,11 +1,7 @@
 pipeline {
     agent any
     
-    environment {
-        JAVA_HOME = '/path/to/your/java/home' // Update with your Java home directory
-        MAVEN_HOME = '/path/to/your/maven/home' // Update with your Maven home directory
-    }
-    
+  
     stages {
         stage('Build') {
             steps {
