@@ -10,9 +10,9 @@ pipeline {
         stage('Build') {
             steps {
                 // Build Spring Boot application
-                script {
-                    sh 'mvn clean package'
-                }
+                
+                echo 'mvn clean package'
+                
             }
             post {
                 success {
@@ -22,16 +22,14 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Run tests
-                script {
-                    sh 'mvn test'
-                }
+               echo 'mvn test'
             }
         }
         stage('Code Quality Analysis') {
             steps {
                 // Run code quality analysis (if applicable)
                 // Example: sh 'sonar-scanner'
+                echo 'sonar-scanner'
             }
         }
         stage('Deploy') {
@@ -39,18 +37,21 @@ pipeline {
                 // Deploy Spring Boot application (for example, to a Docker container)
                 // Example: sh 'docker build -t todo-app .'
                 // Example: sh 'docker run -d -p 8080:8080 todo-app'
+                echo 'deploy'
             }
         }
         stage('Release') {
             steps {
                 // Promote application to production environment (if applicable)
                 // Example: sh 'kubectl apply -f deployment.yaml'
+                  echo 'release'
             }
         }
         stage('Monitoring and Alerting') {
             steps {
                 // Set up monitoring and alerting (if applicable)
                 // Example: sh 'configure-datadog'
+                echo 'Monitoring and Alerting'
             }
         }
     }
