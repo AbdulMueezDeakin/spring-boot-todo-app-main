@@ -7,13 +7,14 @@ pipeline {
         stage('Build') {
             steps {
                 // Build Spring Boot application
-                
-                sh 'mvn --version'
-                
+                sh 'mvn clean package'
             }
             post {
                 success {
-                    echo 'mvn installed successfully'
+                    echo 'Build succeeded'
+                }
+                failure {
+                    echo 'Build failed'
                 }
             }
         }
