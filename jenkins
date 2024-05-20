@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build Spring Boot application
-                sh 'mvn clean'
+                sh 'mvn clean package'
             }
             post {
                 success {
@@ -21,6 +21,14 @@ pipeline {
         stage('Test') {
             steps {
                sh 'mvn test'
+            }
+             post {
+                success {
+                    echo 'Test Run successfully'
+                }
+                failure {
+                    echo 'Test Run Failed'
+                }
             }
         }
         stage('Code Quality Analysis') {
