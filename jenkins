@@ -3,9 +3,6 @@ pipeline {
     tools {
       maven '3.9.6'
      }
-    environment {
-     JAVA_HOME = "/opt/java/jdk-11.0.22"
-     }
     stages {
         stage('Build') {
             steps {
