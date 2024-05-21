@@ -9,8 +9,8 @@ pipeline {
             steps {
                 // Build Spring Boot application
                  script {
-                    sh 'mvn --version'
-                    sh 'java -version'
+                    sh 'mvn clean package'
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                     //archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                 }
             }
