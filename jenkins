@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     tools {
@@ -39,10 +40,10 @@ pipeline {
        stage('Code Quality Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube2') {
-                    sh 'mvn sonar:sonar -X'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=spring-boot-todo-app -Dsonar.host.url=http://localhost:9000 -Dsonar.login=squ_0e6e1cda911e81e3a9e148e700dfe4a29e4ff4c7'
                 }
             }
-        }
+       }
         stage('Deploy') {
             steps {
                 // Deploy Spring Boot application (for example, to a Docker container)
