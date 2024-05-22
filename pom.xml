@@ -86,11 +86,7 @@
 		</plugins>
 		
 	</build>
-<properties>
-    <sonar.projectKey>spring-boot-todo-app</sonar.projectKey>
-    <sonar.host.url>http://localhost:9000</sonar.host.url>
-    <sonar.login>sqa_70e8ae941c878c39fa59acd7bb961cd1723d3615</sonar.login>
-</properties>
+
 	<!-- <properties>
     	<sonar.login>sqa_70e8ae941c878c39fa59acd7bb961cd1723d3615</sonar.login>
 	</properties> -->
