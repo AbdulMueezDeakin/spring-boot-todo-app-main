@@ -1,6 +1,0 @@
-projectKey=co.sohamds.spring.todo:spring-boot-todo-app
-serverUrl=http://localhost:9000
-serverVersion=10.5.1.90531
-dashboardUrl=http://localhost:9000/dashboard?id=co.sohamds.spring.todo%3Aspring-boot-todo-app
-ceTaskId=3ae0c2f3-828e-49c3-93b4-6a10e347f4e1
-ceTaskUrl=http://localhost:9000/api/ce/task?id=3ae0c2f3-828e-49c3-93b4-6a10e347f4e1

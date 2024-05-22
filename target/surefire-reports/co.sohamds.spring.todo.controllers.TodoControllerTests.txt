@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.sohamds.spring.todo.controllers.TodoControllerTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.036 s - in co.sohamds.spring.todo.controllers.TodoControllerTests
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.042 s - in co.sohamds.spring.todo.controllers.TodoControllerTests
