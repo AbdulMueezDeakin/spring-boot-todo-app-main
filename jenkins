@@ -39,7 +39,7 @@ pipeline {
         }
        stage('Code Quality Analysis') {
             steps {
-                withSonarQubeEnv('SonarQub') {
+                withSonarQubeEnv('SonarQube') {
                     sh 'mvn clean verify sonar:sonar \
                         -Dsonar.projectKey=spring-boot-todo-app-main \
                         -Dsonar.projectName="spring-boot-todo-app-main" \
