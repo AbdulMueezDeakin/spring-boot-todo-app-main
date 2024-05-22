@@ -39,7 +39,7 @@ pipeline {
        stage('Code Quality Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube2') {
-                    sh 'mvn sonar:sonar'
+                    sh 'mvn sonar:sonar -X'
                 }
             }
         }
