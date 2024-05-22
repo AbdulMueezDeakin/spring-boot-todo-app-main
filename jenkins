@@ -40,7 +40,7 @@ pipeline {
        stage('Code Quality Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube2') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=spring-boot-todo-app -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqa_70e8ae941c878c39fa59acd7bb961cd1723d3615'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=spring-boot-todo-app -Dsonar.host.url=http://localhost:9000 -Dsonar.login=squ_0e6e1cda911e81e3a9e148e700dfe4a29e4ff4c7'
                 }
             }
        }
