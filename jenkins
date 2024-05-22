@@ -36,11 +36,11 @@ pipeline {
                 }
             }
         }
-        stage('Code Quality Analysis') {
+       stage('Code Quality Analysis') {
             steps {
-                // Run code quality analysis (if applicable)
-                // Example: sh 'sonar-scanner'
-                echo 'sonar-scanner'
+                withSonarQubeEnv('SonarQube') {
+                    sh './mvnw sonar:sonar'
+                }
             }
         }
         stage('Deploy') {
