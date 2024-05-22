@@ -77,18 +77,18 @@
 				</configuration>
 			</plugin>
 
-		<!-- <plugin>
+		<plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
             <version>3.9.1.2184</version>
-        </plugin> -->
+        </plugin>
 	
 		</plugins>
 		
 	</build>
 
-	<!-- <properties>
+	<properties>
     	<sonar.login>sqa_70e8ae941c878c39fa59acd7bb961cd1723d3615</sonar.login>
-	</properties> -->
+	</properties>
 	
 </project>
