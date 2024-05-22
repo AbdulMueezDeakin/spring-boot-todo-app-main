@@ -38,10 +38,9 @@ pipeline {
         }
        stage('Code Quality Analysis') {
             steps {
-                 echo 'apple'
-                //withSonarQubeEnv('SonarQube') {
-                //    sh 'mvn sonar:sonar'
-                //}
+                withSonarQubeEnv('SonarQube') {
+                    sh './mvnw sonar:sonar'
+                }
             }
         }
         stage('Deploy') {
