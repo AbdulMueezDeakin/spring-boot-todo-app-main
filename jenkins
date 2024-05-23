@@ -54,20 +54,21 @@ pipeline {
             steps {
                   script {
                     // Build the Docker image
-                    sh 'docker build -t todo-app .'
+                     sh 'docker --version'
+                    //sh 'docker build -t todo-app .'
 
                     // Stop and remove any existing container
-                    sh '''
-                    if [ $(docker ps -q -f name=todo-app) ]; then
-                        docker stop todo-app
-                    fi
-                    if [ $(docker ps -aq -f name=todo-app) ]; then
-                        docker rm todo-app
-                    fi
-                    '''
+                   // sh '''
+                   // if [ $(docker ps -q -f name=todo-app) ]; then
+                   //     docker stop todo-app
+                   // fi
+                   // if [ $(docker ps -aq -f name=todo-app) ]; then
+                   //     docker rm todo-app
+                  //  fi
+                   // '''
 
                     // Run the Docker container
-                    sh 'docker run -d -p 8282:8282 --name todo-app todo-app'
+                 //   sh 'docker run -d -p 8282:8282 --name todo-app todo-app'
                 }
             }
             post {
