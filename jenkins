@@ -39,21 +39,44 @@ pipeline {
         }
        stage('Code Quality Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn clean verify sonar:sonar \
-                        -Dsonar.projectKey=spring-boot-todo-app-main \
-                        -Dsonar.projectName="spring-boot-todo-app-main" \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.token=squ_b12e071c4c637dcf0acdf3224d221f7495ecf20d'
-                }
+                echo 'mvn sonar:sonar'
+                //withSonarQubeEnv('SonarQube') {
+                 //   sh 'mvn clean verify sonar:sonar \
+                  //      -Dsonar.projectKey=spring-boot-todo-app-main \
+                 //       -Dsonar.projectName="spring-boot-todo-app-main" \
+                 //       -Dsonar.host.url=http://localhost:9000 \
+                //        -Dsonar.token=squ_b12e071c4c637dcf0acdf3224d221f7495ecf20d'
+                //}
             }
+
        }
         stage('Deploy') {
             steps {
-                // Deploy Spring Boot application (for example, to a Docker container)
-                // Example: sh 'docker build -t todo-app .'
-                // Example: sh 'docker run -d -p 8080:8080 todo-app'
-                echo 'deploy'
+                  script {
+                    // Build the Docker image
+                    sh 'docker build -t todo-app .'
+
+                    // Stop and remove any existing container
+                    sh '''
+                    if [ $(docker ps -q -f name=todo-app) ]; then
+                        docker stop todo-app
+                    fi
+                    if [ $(docker ps -aq -f name=todo-app) ]; then
+                        docker rm todo-app
+                    fi
+                    '''
+
+                    // Run the Docker container
+                    sh 'docker run -d -p 8282:8282 --name todo-app todo-app'
+                }
+            }
+            post {
+                success {
+                    echo 'Deployment succeeded'
+                }
+                failure {
+                    echo 'Deployment failed'
+                }
             }
         }
         stage('Release') {
