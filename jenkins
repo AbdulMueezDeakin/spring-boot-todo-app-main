@@ -5,10 +5,6 @@ pipeline {
       maven '3.9.6'
       jdk 'JDK 17'
      }
-     environment{
-        DOCKER_IMAGE = "spring-boot-todo-app-main"
-        //DataTog
-     }
     stages {
         stage('Build') {
             steps {
@@ -54,15 +50,14 @@ pipeline {
             }
 
        }
-        stage('Build Image') {
+        stage('Deploy') {
             steps {
                   script {
                     // Build the Docker image
-                    docker.build(env.DOCKER_IMAGE)
-  //                  sh 'docker build -t todo-app .'
+                    sh 'docker build -t todo-app .'
 
                     // Stop and remove any existing container
-/*                    sh '''
+                    sh '''
                     if [ $(docker ps -q -f name=todo-app) ]; then
                         docker stop todo-app
                     fi
@@ -70,9 +65,9 @@ pipeline {
                         docker rm todo-app
                     fi
                     '''
-*/
+
                     // Run the Docker container
-                   // sh 'docker run -d -p 8282:8282 --name todo-app todo-app'
+                    sh 'docker run -d -p 8282:8282 --name todo-app todo-app'
                 }
             }
             post {
@@ -82,16 +77,6 @@ pipeline {
                 failure {
                     echo 'Deployment failed'
                 }
-            }
-        }
-        stage('Deploy'){
-            steps {
-                  script {
-               sh '''
-                        docker-compose down
-                        docker-compose up -d --build
-                '''
-                  }
             }
         }
         stage('Release') {
