@@ -58,6 +58,7 @@ pipeline {
             steps {
                   script {
                     // Build the Docker image
+                    sh 'apt-get install -y docker.io'
                     docker.build(env.DOCKER_IMAGE)
   //                  sh 'docker build -t todo-app .'
 
