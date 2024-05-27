@@ -71,13 +71,12 @@ pipeline {
        }
      stage('Deploy'){
              steps {
-                   script {
-                bat '''
-                        docker-compose down
-                        docker-compose up -d --build
-                 '''
+                   
+                bat "docker-compose down"
+                bat "docker-compose up -d --build"
+    
                   }
-            }
+            
         }
     }
 
