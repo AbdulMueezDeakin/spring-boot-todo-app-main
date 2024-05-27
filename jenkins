@@ -29,6 +29,19 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            steps {
+               bat 'mvn test'
+            }
+             post {
+                success {
+                    echo 'Test Run successfully'
+                }
+                failure {
+                    echo 'Test Run Failed'
+                }
+            }
+        }
       
     }
 }
