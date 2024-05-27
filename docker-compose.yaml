@@ -3,4 +3,5 @@ services:
   app:
     image: spring-boot-todo-app-main:latest
     build: .
-    ports: "8282:8282"
+    ports:
+      - "8282:8282"
