@@ -42,6 +42,18 @@ pipeline {
                 }
             }
         }
-      
+       stage('Code Quality Analysis') {
+            steps {
+                echo 'mvn sonar:sonar'
+                withSonarQubeEnv('SonarQube') {
+                    bat 'mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=spring-boot-todo-app-main \
+                        -Dsonar.projectName="spring-boot-todo-app-main" \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.token=squ_b0128a6a5b76568ce79bfb878358f3db76bb45a2'
+                }
+            }
+
+       }
     }
 }
