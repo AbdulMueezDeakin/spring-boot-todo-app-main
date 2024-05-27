@@ -4,10 +4,10 @@ pipeline {
     tools {
       maven '3.9.6'
      }
-    // environment{
-     //   DOCKER_IMAGE = "spring-boot-todo-app-main"
-        //DataTog
-     //}
+     environment{
+        DOCKER_IMAGE = "spring-boot-todo-app-main:latest"
+        DATADOG_API_KEY = credentials('datadog-api-key')
+     }
     stages {
         stage('Build') {
             steps {
@@ -55,5 +55,19 @@ pipeline {
             }
 
        }
+     stage('Build Docker Image') {
+             steps {
+              script{
+                   docker.build(env.DOCKER_IMAGE)
+              } 
+            }
+       }
+
+    
+
+
     }
+
+
+
 }
