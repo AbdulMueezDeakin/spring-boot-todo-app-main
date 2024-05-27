@@ -13,7 +13,7 @@ pipeline {
             steps {
                 // Build Spring Boot application
                  script {
-                    sh 'mvn clean package'
+                    bat 'mvn clean package'
                     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                     //archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                 }
