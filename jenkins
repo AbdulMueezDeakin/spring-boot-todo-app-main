@@ -6,7 +6,6 @@ pipeline {
      }
      environment{
         DOCKER_IMAGE = "spring-boot-todo-app-main:latest"
-        DATADOG_API_KEY = credentials('datadog-api-key')
      }
     stages {
         stage('Build') {
@@ -61,11 +60,15 @@ pipeline {
                    docker.build(env.DOCKER_IMAGE)
               } 
             }
+         post {
+                success {
+                    echo 'Docker Image Build successfully'
+                }
+                failure {
+                    echo 'Docker Image Build Failed'
+                }
+            }
        }
-
-    
-
-
     }
 
 
