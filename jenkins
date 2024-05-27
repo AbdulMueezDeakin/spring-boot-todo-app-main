@@ -84,16 +84,16 @@ pipeline {
                 script {
                     echo "Monitoring Stage!"
                     // Send deployment notification to Datadog
-                    bad "
+                    bad '''
                         curl -X POST "https://api.datadoghq.com/api/v1/events" \
                         -H "Content-Type: application/json" \
                         -H "DD-API-KEY: ${DATADOG_API_KEY}" \
-                        -d '{
+                        -d "{
                               "title": "Deployment Successful",
                               "text": "The application has been successfully deployed.",
                               "alert_type": "success"
-                            }'
-                    "
+                            }"
+                        '''
                 }
             }
         }
