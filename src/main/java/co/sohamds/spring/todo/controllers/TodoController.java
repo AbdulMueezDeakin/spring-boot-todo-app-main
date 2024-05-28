@@ -21,13 +21,15 @@ public class TodoController {
 	@GetMapping
 	public String index() {
 	return "index.html";
-}
+    }
+	
 @Trace
 @GetMapping("/todos")
 public String todos(Model model) {
 model.addAttribute("todos", todoRepository.findAll());
 return "todos";
 }
+
 @Trace
 @PostMapping("/todoNew")
 public String add(@RequestParam String todoItem, @RequestParam
@@ -40,6 +42,7 @@ public String add(@RequestParam String todoItem, @RequestParam
 	return "redirect:/todos";
 }
 
+@Trace
 @PostMapping("/todoDelete/{id}")
 public String delete(@PathVariable long id, Model model) {
 	todoRepository.deleteById(id);
@@ -47,6 +50,7 @@ public String delete(@PathVariable long id, Model model) {
 	return "redirect:/todos"; 
 }
 
+@Trace
 @PostMapping("/todoUpdate/{id}")
 public String update(@PathVariable long id, Model model) {
 	Todo todo = todoRepository.findById(id).get();

@@ -2,22 +2,18 @@
 pipeline {
     agent any
     tools {
-      maven '3.9.6'
-     }
-     environment{
-        DOCKER_IMAGE = "spring-boot-todo-app-main:latest"
+        maven '3.9.6'
+    }
+    environment {
+        DOCKER_IMAGE = 'spring-boot-todo-app-main:latest'
         DATADOG_API_KEY = credentials('data_dog')
-     }
+    }
     stages {
-        stage('Build') {
+        stage('Build') { // step 4  Build stage
             steps {
-                // Build Spring Boot application
-                 script {
+                script {
                     bat 'mvn clean package'
-                    bat 'java --version'
-                    bat 'docker --version' 
                     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-                    //archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                 }
             }
             post {
@@ -29,11 +25,11 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Test') { // step 5  Test stage
             steps {
-               bat 'mvn test'
+                bat 'mvn test'
             }
-             post {
+            post {
                 success {
                     echo 'Test Run successfully'
                 }
@@ -42,7 +38,7 @@ pipeline {
                 }
             }
         }
-       stage('Code Quality Analysis') {
+        stage('Code Quality Analysis') { // step 6  Code Quality Analysis
             steps {
                 echo 'mvn sonar:sonar'
                 withSonarQubeEnv('sonarqube') {
@@ -53,15 +49,22 @@ pipeline {
                         -Dsonar.token=squ_b0128a6a5b76568ce79bfb878358f3db76bb45a2'
                 }
             }
-
-       }
-     stage('Build Docker Image') {
-             steps {
-              script{
-                   bat 'docker build -t spring-boot-todo-app-main:latest .'
-              } 
+            post {
+                success {
+                    echo 'Code Quality Analysis done successfully'
+                }
+                failure {
+                    echo 'Code Quality Analysis Failed'
+                }
             }
-         post {
+        }
+        stage('Building Docker Image') {
+            steps {
+                script {
+                    bat 'docker build -t spring-boot-todo-app-main:latest .'
+                }
+            }
+            post {
                 success {
                     echo 'Docker Image Build successfully'
                 }
@@ -69,17 +72,24 @@ pipeline {
                     echo 'Docker Image Build Failed'
                 }
             }
-       }
-     stage('Deploy'){
-             steps {
-                   
-                bat "docker-compose down"
-                bat "docker-compose up -d --build"
-    
-                  }
-            
         }
-      stage('Monitoring and Alerting') {
+        stage('Deploy to staging server') { // step 7 Deploying Application to staging Envirnment
+            steps {
+                bat 'docker-compose down'
+                bat 'docker-compose up -d --build'
+            }
+            post {
+                success {
+                    echo 'Deployed to staging server server successfully'
+                }
+                failure {
+                    echo 'Deployed to staging server server Failed'
+                }
+            }
+
+        }
+
+        stage('Monitoring and Alerting') {// step 9 Monitoring and Alerting
             steps {
                 bat '''
                     curl -X POST "https://api.datadoghq.com/api/v1/events" ^
@@ -87,25 +97,31 @@ pipeline {
                         -H "DD-API-KEY: %DATADOG_API_KEY%" ^
                         -d "{\\"title\\": \\"Deployment Successful\\", \\"text\\": \\"The application has been successfully deployed.\\", \\"alert_type\\": \\"success\\"}"
                 '''
-            script {
-                    def command = """java -javaagent:C:\\Users\\abdul\\Downloads\\dd-java-agent.jar ^
+                script {
+                    def command = '''java -javaagent:C:\\Users\\abdul\\Downloads\\dd-java-agent.jar ^
                         -Ddd.env=testing3 ^
                         -Ddd.logs.injection=true ^
-                        -jar target\\spring-boot-todo-app-0.0.1-SNAPSHOT.jar"""
+                        -jar target\\spring-boot-todo-app-0.0.1-SNAPSHOT.jar'''
 
                     try {
                         timeout(time: 3, unit: 'MINUTES') {
                             bat label: 'Run Java Application', script: command, background: true
                         }
                     } catch (err) {
-                        // Catch timeout error but do nothing
+                    // Catch timeout error but do nothing
                     }
                 }
-
+                post {
+                success {
+                    echo 'Monitoring and Alerting successfully'
+                }
+                failure {
+                    echo 'Monitoring and Alerting Failed'
+                }
+            }
+                
             }
         }
-
     }
-   
 
 }
