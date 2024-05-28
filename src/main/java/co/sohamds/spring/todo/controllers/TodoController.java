@@ -1,5 +1,7 @@
 package co.sohamds.spring.todo.controllers;
 
+import java.beans.Transient;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.sohamds.spring.todo.domain.Todo;
 import co.sohamds.spring.todo.repository.TodoRepository;
+import datadog.trace.api.Trace;
 
 @Controller
 public class TodoController {
@@ -19,13 +22,13 @@ public class TodoController {
 	public String index() {
 	return "index.html";
 }
-
+@Trace
 @GetMapping("/todos")
 public String todos(Model model) {
 model.addAttribute("todos", todoRepository.findAll());
 return "todos";
 }
-
+@Trace
 @PostMapping("/todoNew")
 public String add(@RequestParam String todoItem, @RequestParam
 	String status, Model model) {
