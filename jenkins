@@ -110,16 +110,15 @@ pipeline {
                     } catch (err) {
                     // Catch timeout error but do nothing
                     }
-                }
-                post {
+                }   
+            }
+            post {
                 success {
                     echo 'Monitoring and Alerting successfully'
                 }
                 failure {
                     echo 'Monitoring and Alerting Failed'
                 }
-            }
-                
             }
         }
     }
