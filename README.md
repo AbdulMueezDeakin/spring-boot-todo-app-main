@@ -9,6 +9,7 @@ view and delete various Todo items.
 4. BootStrap
 5. Thymeleaf
 6. Spring Tool Suite (STS)
+7. JUnit tests 
 
 **Home Page:**
 Below is our application home page:-
