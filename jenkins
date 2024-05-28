@@ -87,19 +87,20 @@ pipeline {
                         -H "DD-API-KEY: %DATADOG_API_KEY%" ^
                         -d "{\\"title\\": \\"Deployment Successful\\", \\"text\\": \\"The application has been successfully deployed.\\", \\"alert_type\\": \\"success\\"}"
                 '''
-                def command = """java -javaagent:C:\\Users\\abdul\\Downloads\\dd-java-agent.jar ^
-                -Ddd.env=testing3 ^
-                -Ddd.logs.injection=true ^
-                -jar target\\spring-boot-todo-app-0.0.1-SNAPSHOT.jar"""
+            script {
+                    def command = """java -javaagent:C:\\Users\\abdul\\Downloads\\dd-java-agent.jar ^
+                        -Ddd.env=testing3 ^
+                        -Ddd.logs.injection=true ^
+                        -jar target\\spring-boot-todo-app-0.0.1-SNAPSHOT.jar"""
 
-                // Execute the command in background with timeout
-            try {
-                timeout(time: 3, unit: 'MINUTES') {
-                    bat label: 'Run Java Application', script: command, background: true
+                    try {
+                        timeout(time: 3, unit: 'MINUTES') {
+                            bat label: 'Run Java Application', script: command, background: true
+                        }
+                    } catch (err) {
+                        // Catch timeout error but do nothing
+                    }
                 }
-            } catch (err) {
-                // Catch timeout error but do nothing
-            }
 
             }
         }
